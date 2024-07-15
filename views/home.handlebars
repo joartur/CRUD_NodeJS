@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produtos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        header {
+            background: #f8f8f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 10px 50px;
+        }
+        .header-image {
+            max-width: 70px;
+            margin-left: 20px;
+        }
+        .header-image-add {
+            max-width: 70px;
+            margin-right: 20px;
+        }
+        .search-container {
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-top: 100px; 
+            padding: 20px;
+        }
+        
+        .grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+        .grid-item {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            width: calc(33.333% - 20px); /* 3 items per row */
+            box-sizing: border-box;
+            text-align: center;
+        }
+        .grid-item img {
+            max-width: 60%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .grid-item h2 {
+            font-size: 1.5em;
+            margin: 10px 0;
+        }
+        .grid-item p {
+            margin: 5px 0;
+            color: red;
+            font-weight: bold;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 1.2em;
+        }
+        .grid-item a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 10px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .grid-item a:hover {
+            background: #0056b3;
+        }
+        @media only screen and (max-width: 768px) {
+            .grid-item {
+                width: calc(50% - 20px); 
+            }
+        }
+        @media only screen and (max-width: 480px) {
+            .grid-item {
+                width: calc(100% - 20px); 
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/"><img src="https://cdn4.iconfinder.com/data/icons/rest/30/take-out-512.png" alt="Logo" class="header-image"></a>
+        <div class="search-container">
+            <input type="text" placeholder="Buscar...">
+            <button>Buscar</button>
+        </div>
+        <a href="/create"><img src="https://cdn2.iconfinder.com/data/icons/e-commerce-line-8-1/1024/add_cart8-256.png" alt="Add" class="header-image-add"></a>
+    </header>
+    <div class="container">
+        {{#if success}}
+            <p class="success-message">Item cadastrado com sucesso!</p>
+        {{/if}}
+        {{#if editSuccess}}
+            <p class="success-message">Item editado com sucesso!</p>
+        {{/if}}
+        <div class="grid">
+            {{#each items}}
+                <div class="grid-item">
+                    <img src="{{this.image}}" alt="{{this.nome}}">
+                    <h2>{{this.nome}}</h2>
+                    <p>Preço: {{this.preco}}</p>
+                    <a href="/item/{{this.id}}">Ver Mais</a>
+                </div>
+            {{/each}}
+        </div>
+    </div>
+</body>
+</html>

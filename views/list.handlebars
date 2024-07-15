@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listar Registros</title>
+    <style>
+        .confirm-delete {
+            display: none;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+        .confirm-delete button {
+            margin-right: 10px;
+        }
+        .confirm-delete .btn-yes {
+            background-color: red;
+            color: white;
+        }
+        .confirm-delete .btn-no {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>Listar Registros</h1>
+    <ul>
+        {{#each item}}
+            <li>
+                {{this.nome}} - {{this.info}} - {{this.quant}} - {{this.preco}}
+                <a href="/edit/{{this.id}}">Editar</a>
+                <a href="#" onclick="showConfirmDelete('{{this.id}}')">Deletar</a>
+            </li>
+        {{/each}}
+    </ul>
+    <div id="confirmDelete" class="confirm-delete">
+        <p>Deseja realmente excluir este item?</p>
+        <button class="btn-yes" onclick="confirmDelete('{{this.id}}')">Sim</button>
+        <button class="btn-no" onclick="cancelDelete()">Não</button>
+    </div>
+    <a href="/">Voltar</a>
+
+    <script>
+        function showConfirmDelete(itemId) {
+            const confirmDelete = document.getElementById('confirmDelete');
+            confirmDelete.style.display = 'block';
+            confirmDelete.dataset.itemId = itemId;
+        }
+
+        function confirmDelete(itemId) {
+            fetch('/delete/' + itemId, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/list';
+                } else {
+                    console.error('Erro ao deletar item');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao deletar item:', error);
+            });
+        }
+
+        function cancelDelete() {
+            const confirmDelete = document.getElementById('confirmDelete');
+            confirmDelete.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        header {
+            background: #f8f8f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 10px 50px;
+        }
+        .header-image {
+            max-width: 70px;
+            margin-left: 20px;
+        }
+        .header-image-add {
+            max-width: 70px;
+            margin-right: 20px;
+        }
+        .search-container {
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .form-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 100px;
+            background: #fff;
+        }
+        .form-container h1 {
+            text-align: center;
+        }
+        .form-container label {
+            display: block;
+            margin-top: 10px;
+        }
+        .form-container input[type="text"],
+        .form-container input[type="number"],
+        .form-container input[type="email"],
+        .form-container textarea {
+            width: 96%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .form-container button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .form-container button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/"><img src="https://cdn4.iconfinder.com/data/icons/rest/30/take-out-512.png" alt="Logo" class="header-image"></a>
+        <div class="search-container">
+            <input type="text" placeholder="Buscar...">
+            <button>Buscar</button>
+        </div>
+        <a href="/create"><img src="https://cdn2.iconfinder.com/data/icons/e-commerce-line-8-1/1024/add_cart8-256.png" alt="Add" class="header-image-add"></a>
+    </header>
+    <div class="form-container">
+        <h1>Editar Item</h1>
+        <form action="/update/{{item.id}}" method="POST">
+            <label for="nome">Nome:</label>
+            <input type="text" name="nome" id="nome" value="{{item.nome}}" required>
+            <label for="info">Info:</label>
+            <input type="text" name="info" id="info" value="{{item.info}}" required>
+            <label for="quant">Quantidade:</label>
+            <input type="number" name="quant" id="quant" value="{{item.quant}}" required>
+            <label for="preco">Preço:</label>
+            <input type="number" name="preco" id="preco" value="{{item.preco}}" required>
+            <label for="preco">Imagem:</label>
+            <input type="text" name="image" id="image" value="{{item.image}}" required>
+            <button type="submit">Atualizar</button>
+        </form>
+    </div>
+    <a href="/">Voltar</a>
+</body>
+</html>

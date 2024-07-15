@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Detalhes do Item</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            background: #f0f0f0;
+        }
+        header {
+            background: #f8f8f8;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 10px 50px;
+        }
+        .header-image {
+            max-width: 70px;
+            margin-left: 20px;
+        }
+        .header-image-add {
+            max-width: 70px;
+            margin-right: 20px;
+        }
+        .search-container {
+            max-width: 400px;
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        .search-container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            border: none;
+            background: #007BFF;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        .item-container {
+            max-width: 600px;
+            width: 100%;
+            margin: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 20px;
+            text-align: center;
+            margin-top: 100px; 
+            background: #fff;
+        }
+        .item-container img {
+            width: 500px;
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .item-container h1 {
+            font-size: 2em;
+            margin: 20px 0;
+        }
+        .item-container p {
+            margin: 10px 0;
+            text-align: left;
+            padding-left: 50px;
+        }
+        .item-container a, .item-container button {
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            background: #007BFF;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+        }
+        .item-container a:hover, .item-container button:hover {
+            background: #0056b3;
+        }
+        .confirm-delete {
+            display: none;
+            background-color: #f1f1f1;
+            border: 1px solid #ccc;
+            padding: 10px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+        }
+        .confirm-delete button {
+            margin-right: 10px;
+        }
+        .confirm-delete .btn-yes {
+            background-color: red;
+            color: white;
+        }
+        .confirm-delete .btn-no {
+            background-color: green;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="/"><img src="https://cdn4.iconfinder.com/data/icons/rest/30/take-out-512.png" alt="Logo" class="header-image"></a>
+        <div class="search-container">
+            <input type="text" placeholder="Buscar...">
+            <button>Buscar</button>
+        </div>
+        <a href="/create"><img src="https://cdn2.iconfinder.com/data/icons/e-commerce-line-8-1/1024/add_cart8-256.png" alt="Add" class="header-image-add"></a>
+    </header>
+    <div class="item-container">
+        <img src="{{item.image}}" alt="{{item.nome}}">
+        <h1>{{item.nome}}</h1>
+        <p><i class="fa fa-star-o"></i>Descrição: {{item.info}}</p>
+        <p>Quantidade: {{item.quant}}</p>
+        <p>Preço: {{item.preco}}</p>
+        <a href="/">Voltar</a>
+        <a href="/edit/{{item.id}}">Editar</a>
+        <button onclick="showConfirmDelete()">Deletar</button>
+    </div>
+
+    <div id="confirmDelete" class="confirm-delete">
+        <p>Deseja realmente excluir este item?</p>
+        <button class="btn-yes" onclick="confirmDelete('{{item.id}}')">Sim</button>
+        <button class="btn-no" onclick="cancelDelete()">Não</button>
+    </div>
+
+    <script>
+        function showConfirmDelete() {
+            const confirmDelete = document.getElementById('confirmDelete');
+            confirmDelete.style.display = 'block';
+        }
+
+        function confirmDelete(itemId) {
+            fetch('/delete/' + itemId, {
+                method: 'POST'
+            })
+            .then(response => {
+                if (response.ok) {
+                    window.location.href = '/';
+                } else {
+                    console.error('Erro ao deletar item');
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao deletar item:', error);
+            });
+        }
+
+        function cancelDelete() {
+            const confirmDelete = document.getElementById('confirmDelete');
+            confirmDelete.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
